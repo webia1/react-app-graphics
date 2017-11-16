@@ -29,20 +29,14 @@ class App extends Component {
 
   render() {
     let currentSeries = data[this.state.selectedSeries].timeSeries.entries;
+    let currentSum = currentSeries
+      .map(i => parseInt(i.v, 10))
+      .filter(i => !isNaN(i))
+      .reduce((i, j) => {
+        console.log(i, j);
+        return i + j;
+      }, 0);
 
-    console.log(currentSeries);
-
-    const xdata = [
-      { name: 'Page A', uv: 4000 },
-      { name: 'Page B', uv: 3000 },
-      { name: 'Page C', uv: 2000 },
-      { name: 'Page D', uv: 2780 },
-      { name: 'Page E', uv: 1890 },
-      { name: 'Page F', uv: 2390 },
-      { name: 'Page G', uv: 3490 }
-    ];
-
-    var message = 'Selected Index: ' + this.state.selectedSeries;
     return (
       <div className="App">
         <header className="App-header">
@@ -63,7 +57,10 @@ class App extends Component {
                 </option>
               ))}
             </select>
-            {message}
+            <span className="App-series-info">
+              {'Selected Index: ' + this.state.selectedSeries}
+            </span>
+            <span className="App-series-info">{'Summe: ' + currentSum}</span>
           </div>
         </header>
         <div className="chartContainer">
@@ -78,12 +75,24 @@ class App extends Component {
               <YAxis />
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
+              <defs>
+                <linearGradient id="seriesColor" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor="#345069" stopOpacity={1} />
+                  <stop offset="100%" stopColor="#4BABF4" stopOpacity={0.4} />
+                </linearGradient>
+              </defs>
               <Area
+                activeDot={{
+                  stroke: '#EEE',
+                  strokeWidth: 3,
+                  r: 10,
+                  fill: '#2196f3'
+                }}
                 type="monotone"
                 dataKey="v"
                 stackId="1"
                 stroke="#8884d8"
-                fill="#8884d8"
+                fill="url(#seriesColor)"
               />
             </AreaChart>
           </ResponsiveContainer>

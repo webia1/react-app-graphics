@@ -26,6 +26,9 @@
 .App-selected-series {
   margin-right: 20px;
 }
+.App-series-info {
+  padding: 0 10px;
+}
 
 @keyframes App-logo-spin {
   from {
