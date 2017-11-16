@@ -32,10 +32,7 @@ class App extends Component {
     let currentSum = currentSeries
       .map(i => parseInt(i.v, 10))
       .filter(i => !isNaN(i))
-      .reduce((i, j) => {
-        console.log(i, j);
-        return i + j;
-      }, 0);
+      .reduce((i, j) => i + j, 0);
 
     return (
       <div className="App">
