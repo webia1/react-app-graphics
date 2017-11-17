@@ -10,7 +10,8 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  ResponsiveContainer
+  ResponsiveContainer,
+  Legend
 } from 'recharts';
 
 class App extends Component {
@@ -21,6 +22,13 @@ class App extends Component {
     };
   }
 
+  formatCurrency(input) {
+    return input.toLocaleString('de-DE', {
+      style: 'decimal',
+      maximumFractionDigits: 0
+    });
+  }
+
   setSelectedSeries(event) {
     this.setState({
       selectedSeries: event.target.value
@@ -29,10 +37,16 @@ class App extends Component {
 
   render() {
     let currentSeries = data[this.state.selectedSeries].timeSeries.entries;
-    let currentSum = currentSeries
+    let currentSumArray = currentSeries
       .map(i => parseInt(i.v, 10))
-      .filter(i => !isNaN(i))
-      .reduce((i, j) => i + j, 0);
+      .filter(i => !isNaN(i));
+
+    let currentSum = currentSumArray.reduce((i, j) => i + j, 0);
+    // Todo: Division by Zero could be possible
+    let avarage = currentSum / currentSumArray.length;
+
+    currentSum = this.formatCurrency(currentSum);
+    avarage = this.formatCurrency(avarage);
 
     return (
       <div className="App">
@@ -58,6 +72,7 @@ class App extends Component {
               {'Selected Index: ' + this.state.selectedSeries}
             </span>
             <span className="App-series-info">{'Summe: ' + currentSum}</span>
+            <span className="App-series-info">{'Avarage: ' + avarage}</span>
           </div>
         </header>
         <div className="chartContainer">
@@ -70,6 +85,7 @@ class App extends Component {
             >
               <XAxis dataKey="d" />
               <YAxis />
+              <Legend verticalAlign="top" height={36} />
               <CartesianGrid strokeDasharray="3 3" />
               <Tooltip />
               <defs>
