@@ -18,7 +18,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedSeries: 0
+      selectedSeries: 0,
+      multiplikator: 1
     };
   }
 
@@ -35,10 +36,17 @@ class App extends Component {
     });
   }
 
+  setMultiplikator(event) {
+    this.setState({
+      multiplikator: event.target.value
+    });
+  }
+
   render() {
+    let multiplikator = [1, 2, 3];
     let currentSeries = data[this.state.selectedSeries].timeSeries.entries;
     let currentSumArray = currentSeries
-      .map(i => parseInt(i.v, 10))
+      .map(i => parseInt(i.v, 10) * this.state.multiplikator)
       .filter(i => !isNaN(i));
 
     let currentSum = currentSumArray.reduce((i, j) => i + j, 0);
@@ -68,8 +76,18 @@ class App extends Component {
                 </option>
               ))}
             </select>
+            *
             <span className="App-series-info">
-              {'Selected Index: ' + this.state.selectedSeries}
+              <select
+                value={this.state.multiplikator}
+                onChange={this.setMultiplikator.bind(this)}
+              >
+                {multiplikator.map(key => (
+                  <option value={key} key={key}>
+                    {key}
+                  </option>
+                ))}
+              </select>
             </span>
             <span className="App-series-info">{'Summe: ' + currentSum}</span>
             <span className="App-series-info">{'Avarage: ' + avarage}</span>
