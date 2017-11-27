@@ -30,16 +30,17 @@ class ResponsiveChartContainer extends React.Component {
             <Tooltip />
             <defs>
               <linearGradient id="seriesColor" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#345069" stopOpacity={1} />
-                <stop offset="100%" stopColor="#4BABF4" stopOpacity={0.4} />
+                <stop offset="0%" stopColor="#ef00fc" stopOpacity={1} />
+                <stop offset="50%" stopColor="#4138FA" stopOpacity={0.6} />
+                <stop offset="100%" stopColor="#2D7EF9" stopOpacity={0.4} />
               </linearGradient>
             </defs>
             <Area
               activeDot={{
-                stroke: '#EEE',
-                strokeWidth: 3,
-                r: 10,
-                fill: '#2196f3'
+                stroke: '#ef00fc',
+                strokeWidth: 4,
+                r: 6,
+                fill: 'white'
               }}
               type="monotone"
               dataKey="v"
