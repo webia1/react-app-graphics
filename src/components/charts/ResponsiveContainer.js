@@ -20,8 +20,6 @@ class ResponsiveChartContainer extends React.Component {
       <div className="chartContainer">
         <ResponsiveContainer width="100%" height={360}>
           <AreaChart
-            width={600}
-            height={400}
             data={this.props.data}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
